@@ -247,3 +247,21 @@ class ChatWoot:
         json_response_dict = check_response(response, 200, "Message Creation Failed")
 
         return json_response_dict
+
+    def toggle_conversation_status(self, conversation_id)->str:
+        """
+        Toggles the status of the conversation between open and resolved
+        """
+        headers = {'api_access_token': self.api_access_token, 'Content-type': 'application/json'}
+        url = f"{domain}/api/v1/accounts/{account_id}/conversations/{conversation_id}/toggle_status".format(
+            domain=self.domain,
+            account_id=self.account_id,
+            conversation_id=conversation_id
+        )
+        response = request.post(url)
+
+        json_response_dict = check_response(response, 200, "Toggle Status Failed")
+
+        status = str(json_response_dict['status'])
+
+        return status
